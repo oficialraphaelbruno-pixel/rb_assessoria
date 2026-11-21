@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "@fontsource-variable/montserrat";
+@import "@fontsource-variable/inter";
+
+/* ---------------------------------------------------------------
+   Design system RB — cores extraídas da logomarca oficial
+   navy  #0D3845 (letra R)   petrol #265A69 (linha/ASSESSORIA)
+   teal  #13A09B → aqua #66C8C2 (gradiente "COMUNICAÇÃO")
+   turquoise #34B4B2 (letra B)
+---------------------------------------------------------------- */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat Variable", "Inter Variable", ui-sans-serif, sans-serif;
+
+  --color-ink-950: #060d10;
+  --color-ink-900: #0b1418;
+  --color-ink-800: #10222a;
+  --color-navy-900: #0a2b35;
+  --color-navy-800: #0d3845;
+  --color-navy-700: #123f4d;
+  --color-petrol-600: #1f5363;
+  --color-petrol-500: #265a69;
+  --color-petrol-400: #3d7383;
+  --color-teal-600: #0f8a86;
+  --color-teal-500: #13a09b;
+  --color-turq-400: #34b4b2;
+  --color-turq-300: #66c8c2;
+  --color-turq-200: #a8e0dc;
+  --color-turq-100: #dff3f1;
+  --color-turq-50: #f0f9f8;
+  --color-mist-50: #f5f8f9;
+  --color-mist-100: #eaf0f2;
+  --color-mist-200: #d6e1e4;
+  --color-mist-400: #8aa1a8;
+  --color-mist-600: #52676e;
+
+  --radius-xl2: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(13 56 69 / 0.06), 0 8px 24px -12px rgb(13 56 69 / 0.18);
+  --shadow-glow: 0 0 0 1px rgb(52 180 178 / 0.25), 0 20px 60px -20px rgb(52 180 178 / 0.45);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-float: float 8s ease-in-out infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+  body {
+    @apply bg-white text-navy-800 antialiased font-sans;
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-turq-200); color: var(--color-navy-900); }
+  :focus-visible { outline: 2px solid var(--color-turq-400); outline-offset: 3px; border-radius: 6px; }
+}
+
+@utility container-rb { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-teal-500;
+  &::before { content: ""; @apply h-px w-6 bg-current; }
+}
+@utility section { @apply py-20 sm:py-28; }
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60; }
+@utility btn-primary { @apply btn bg-turq-400 text-ink-900 hover:bg-turq-300 hover:shadow-glow; }
+@utility btn-dark { @apply btn bg-navy-800 text-white hover:bg-navy-700; }
+@utility btn-ghost { @apply btn border border-current/20 hover:border-turq-400 hover:text-turq-400; }
+
+@utility card { @apply rounded-xl2 border border-mist-200 bg-white shadow-card; }
+@utility card-dark { @apply rounded-xl2 border border-white/10 bg-white/[0.03] backdrop-blur; }
+
+@utility grid-tech {
+  background-image:
+    linear-gradient(to right, rgb(102 200 194 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(102 200 194 / 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+@utility text-gradient {
+  background: linear-gradient(90deg, var(--color-teal-500), var(--color-turq-300));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+@utility label { @apply mb-1.5 block text-sm font-medium text-navy-800; }
+@utility input {
+  @apply block w-full rounded-lg border border-mist-200 bg-white px-3.5 py-2.5 text-sm text-navy-900 placeholder:text-mist-400
+    transition focus:border-turq-400 focus:outline-none focus:ring-4 focus:ring-turq-400/15 disabled:bg-mist-50;
+}
+@utility prose-rb {
+  & h2 { @apply mt-8 mb-3 text-xl font-bold text-navy-800; }
+  & p { @apply mb-4 leading-relaxed text-mist-600; }
+  & ul { @apply mb-4 list-disc pl-5 text-mist-600; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
