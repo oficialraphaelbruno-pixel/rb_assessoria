@@ -103,3 +103,49 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---------------------------------------------------------------
+   Painel: tema escuro (classe .admin-dark no <html>, escolhida pelo
+   usuário ou pelo sistema). Remapeia as superfícies e textos usados
+   no painel; a barra lateral já é escura.
+---------------------------------------------------------------- */
+.admin-dark { color-scheme: dark; }
+.admin-dark .admin-root {
+  --adm-bg: #0a1317;
+  --adm-surface: #0f1d23;
+  --adm-surface-2: #15272e;
+  --adm-border: #22363e;
+  --adm-text: #e4eef0;
+  --adm-text-2: #9fb3ba;
+  --adm-text-3: #6f8790;
+  background-color: var(--adm-bg);
+  color: var(--adm-text);
+}
+.admin-dark .admin-root :is(.bg-white, .card, .input) { background-color: var(--adm-surface); }
+.admin-dark .admin-root .bg-white\/95 { background-color: rgb(15 29 35 / 0.95); }
+.admin-dark .admin-root :is(.bg-mist-50, .bg-mist-50\/60) { background-color: var(--adm-bg); }
+.admin-dark .admin-root .bg-mist-100 { background-color: var(--adm-surface-2); }
+.admin-dark .admin-root :is(.hover\:bg-mist-50:hover, .hover\:bg-mist-50\/60:hover, .hover\:bg-mist-100:hover) { background-color: var(--adm-surface-2); }
+.admin-dark .admin-root :is(.border-mist-200, .border-mist-100, .card, .input) { border-color: var(--adm-border); }
+.admin-dark .admin-root :is(.divide-mist-100, .divide-mist-200) > :not(:last-child) { border-color: var(--adm-border); }
+.admin-dark .admin-root :is(.text-navy-800, .text-navy-900, .label, .input) { color: var(--adm-text); }
+.admin-dark .admin-root .text-mist-600 { color: var(--adm-text-2); }
+.admin-dark .admin-root .text-mist-400, .admin-dark .admin-root .input::placeholder { color: var(--adm-text-3); }
+.admin-dark .admin-root .bg-navy-800 { background-color: #1d4a58; }
+.admin-dark .admin-root .border-navy-800 { border-color: #1d4a58; }
+.admin-dark .admin-root .hover\:text-teal-600:hover, .admin-dark .admin-root .text-teal-600 { color: var(--color-turq-300); }
+.admin-dark .admin-root .bg-turq-50 { background-color: rgb(52 180 178 / 0.15); }
+.admin-dark .admin-root .hover\:bg-turq-50:hover { background-color: rgb(52 180 178 / 0.15); }
+.admin-dark .admin-root .bg-emerald-50 { background-color: rgb(16 185 129 / 0.15); }
+.admin-dark .admin-root .bg-amber-50, .admin-dark .admin-root .bg-amber-50\/50 { background-color: rgb(245 158 11 / 0.15); }
+.admin-dark .admin-root .bg-red-50 { background-color: rgb(239 68 68 / 0.15); }
+.admin-dark .admin-root .bg-sky-50 { background-color: rgb(14 165 233 / 0.15); }
+.admin-dark .admin-root :is(.text-emerald-700, .text-emerald-800) { color: #6ee7b7; }
+.admin-dark .admin-root :is(.text-amber-700, .text-amber-800) { color: #fcd34d; }
+.admin-dark .admin-root .text-red-600, .admin-dark .admin-root .text-red-700 { color: #fca5a5; }
+.admin-dark .admin-root .text-sky-700 { color: #7dd3fc; }
+.admin-dark .admin-root :is(.border-amber-200, .border-amber-300, .border-red-200, .border-emerald-200) { border-color: var(--adm-border); }
+.admin-dark .admin-root .recharts-cartesian-grid line { stroke: var(--adm-border); }
+.admin-dark .admin-root .recharts-default-tooltip { background-color: var(--adm-surface) !important; border-color: var(--adm-border) !important; color: var(--adm-text); }
+.admin-dark .admin-root .recharts-text { fill: var(--adm-text-2); }
+.admin-dark .admin-root .ring-white { --tw-ring-color: var(--adm-surface); }

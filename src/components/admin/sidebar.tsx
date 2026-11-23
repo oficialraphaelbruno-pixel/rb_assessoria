@@ -8,6 +8,7 @@ import {
   ListChecks, LogOut, Menu, MessagesSquare, PlugZap, ScrollText, Settings2, Tags, Upload, Users, Wallet, X, Layers, BadgeDollarSign, FlaskConical, Contact,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./theme-toggle";
 
 const NAV = [
   { group: "Visão geral", admin: false, items: [
@@ -86,11 +87,12 @@ export function Sidebar({ role, email, unread }: { role: "admin" | "editor"; ema
       {open && <div className="fixed inset-0 z-40 bg-ink-900/50 lg:hidden" onClick={() => setOpen(false)} aria-hidden />}
       <aside className={cn("fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-ink-900 transition-transform lg:sticky lg:top-0 lg:h-screen lg:translate-x-0", open ? "translate-x-0" : "-translate-x-full")}>
         <div className="flex items-center justify-between gap-2 border-b border-white/10 px-5 py-4">
-          <Link href="/admin" className="rounded-lg bg-white px-2.5 py-1.5"><Image src="/brand/logo-rb.png" alt="RB Assessoria" width={1682} height={362} className="h-7 w-auto" /></Link>
+          <Link href="/admin" className="rounded-lg bg-[#fff] px-2.5 py-1.5"><Image src="/brand/logo-rb.png" alt="RB Assessoria" width={1682} height={362} className="h-7 w-auto" /></Link>
           <button type="button" onClick={() => setOpen(false)} className="rounded-lg p-1.5 text-white/60 hover:bg-white/10 lg:hidden" aria-label="Fechar menu"><X className="h-5 w-5" /></button>
         </div>
         {nav}
         <div className="space-y-1 border-t border-white/10 p-3">
+          <ThemeToggle />
           <a href="/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white"><ExternalLink className="h-4 w-4" /> Ver site</a>
           <form action="/admin/auth/logout" method="post">
             <button type="submit" className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white"><LogOut className="h-4 w-4" /> Sair</button>
