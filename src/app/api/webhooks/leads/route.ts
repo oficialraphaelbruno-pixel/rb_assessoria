@@ -17,6 +17,7 @@ const schema = z.object({
   service: z.string().trim().max(120).optional().default(""),
   message: z.string().trim().max(4000).optional().default(""),
   consent: z.boolean().optional().default(false),
+  marketing_consent: z.boolean().optional().default(false),
   utm: z.record(z.string().max(40), z.string().max(200)).optional().default({}),
 });
 
@@ -37,6 +38,7 @@ export async function POST(req: Request) {
   const d = parsed.data;
   const { data: integ } = await admin.from("integrations").select("enabled").eq("key", d.source === "meta_ads" ? "meta_ads" : d.source).maybeSingle();
   if (integ && !integ.enabled) return NextResponse.json({ error: "source_disabled" }, { status: 403 });
-  const id = await createLead(admin, { ...d, email: d.email.toLowerCase(), landing_page: "", ip_hash: undefined });
+  const { marketing_consent, ...rest } = d;
+  const id = await createLead(admin, { ...rest, marketing: marketing_consent, email: d.email.toLowerCase(), landing_page: "", ip_hash: undefined });
   return NextResponse.json({ ok: true, id });
 }

@@ -24,6 +24,7 @@ export interface ResourceDef {
   fields: FieldDef[];
   filters?: { name: string; label: string; options: { value: string; label: string }[] }[];
   description?: string;
+  exportPath?: string;
 }
 
 const status: FieldDef = { name: "status", label: "Status", type: "select", options: [{ value: "draft", label: "Rascunho (oculto)" }, { value: "published", label: "Publicado" }] };
@@ -125,7 +126,7 @@ export const RESOURCES: Record<string, ResourceDef> = {
     ],
   },
   crm: {
-    key: "crm", table: "crm_clients", label: "Cliente", plural: "Clientes (CRM)", path: "/admin/clientes", adminOnly: true, titleField: "name",
+    key: "crm", table: "crm_clients", label: "Cliente", plural: "Clientes (CRM)", path: "/admin/clientes", adminOnly: true, titleField: "name", exportPath: "/admin/clientes/exportar",
     orderBy: [{ column: "name", ascending: true }], searchColumns: ["name", "company", "email", "phone"],
     columns: [{ name: "name", label: "Nome" }, { name: "company", label: "Empresa" }, { name: "service", label: "Serviço" }, { name: "monthly_value_cents", label: "Mensal", format: "money" }, { name: "due_day", label: "Venc." }, { name: "status", label: "Status", format: "badge" }],
     filters: [{ name: "status", label: "Status", options: [{ value: "ativo", label: "Ativos" }, { value: "pausado", label: "Pausados" }, { value: "encerrado", label: "Encerrados" }, { value: "prospect", label: "Prospects" }] }],

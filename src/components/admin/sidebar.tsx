@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Bell, Bot, BookOpen, Briefcase, ExternalLink, FileText, FolderKanban, Gauge, HelpCircle, Image as ImageIcon, LayoutTemplate,
-  ListChecks, LogOut, Menu, MessagesSquare, PlugZap, ScrollText, Settings2, Tags, Upload, Users, Wallet, X, Layers, BadgeDollarSign, FlaskConical, Contact,
+  ListChecks, LogOut, Menu, MessagesSquare, PlugZap, ScrollText, Settings2, Tags, Upload, Users, Wallet, X, Layers, BadgeDollarSign, FlaskConical, Contact, Mail, TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
@@ -26,6 +26,8 @@ const NAV = [
   { group: "Comercial", admin: true, items: [
     { href: "/admin/leads", label: "Leads (funil)", icon: ListChecks },
     { href: "/admin/clientes", label: "Clientes (CRM)", icon: Contact },
+    { href: "/admin/email-marketing", label: "E-mail marketing", icon: Mail },
+    { href: "/admin/trafego", label: "Tráfego (Meta Ads)", icon: TrendingUp },
     { href: "/admin/projetos", label: "Projetos", icon: FolderKanban },
     { href: "/admin/documentos", label: "Documentos", icon: FileText },
   ]},

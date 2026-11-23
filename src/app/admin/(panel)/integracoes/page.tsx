@@ -12,7 +12,9 @@ export default async function IntegrationsPage() {
   const checks = [
     ["Supabase (chave de servidor)", !!env.supabaseServiceKey],
     ["IA — Anthropic", !!env.anthropicKey], ["IA — OpenAI", !!env.openaiKey],
-    ["E-mail — Resend", !!env.resendKey && !!env.notifyTo], ["Webhook de leads", !!env.leadsWebhookToken], ["Tarefas agendadas (cron)", !!env.cronSecret],
+    ["E-mail marketing — Resend", !!env.resendKey && !!env.resendSegmentId],
+    ["Notificação por e-mail", !!env.resendKey && !!env.notifyTo && !!env.notifyFrom],
+    ["Meta Ads (leitura de campanhas)", !!env.metaToken && !!env.metaAdAccountId], ["Webhook de leads", !!env.leadsWebhookToken], ["Tarefas agendadas (cron)", !!env.cronSecret],
   ] as const;
   return (
     <>
@@ -38,7 +40,7 @@ Authorization: Bearer <LEADS_WEBHOOK_TOKEN>
 Content-Type: application/json
 
 { "source": "manychat", "name": "Maria", "phone": "31999999999", "email": "",
-  "service": "Social Media", "message": "Comentou PENEIRA", "consent": true,
+  "service": "Social Media", "message": "Comentou PENEIRA", "consent": true, "marketing_consent": false,
   "utm": { "utm_campaign": "peneira-2027" } }`}</pre>
           <p className="mt-3 text-xs text-mist-600">A origem precisa estar ativa nesta página. O lead entra no funil com a origem informada e gera notificação.</p>
         </Panel>

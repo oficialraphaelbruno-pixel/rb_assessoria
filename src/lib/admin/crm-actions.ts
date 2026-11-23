@@ -54,6 +54,7 @@ export async function updateLead(id: string, _prev: ActionResult | null, fd: For
     estimated_value_cents: value ? parseBRLToCents(value) : null,
     notes: String(fd.get("notes") || "").slice(0, 8000) || null,
     lost_reason: String(fd.get("lost_reason") || "").slice(0, 500) || null,
+    audience: ["clube", "empresa", "outro"].includes(String(fd.get("audience"))) ? String(fd.get("audience")) : "outro",
   };
   if (row.name.length < 2) return { ok: false, error: "Informe o nome." };
   const { db } = await log("update", "leads", id);

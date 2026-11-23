@@ -64,7 +64,10 @@ export async function ResourceListView({ resourceKey, searchParams }: { resource
   return (
     <>
       <PageHeader title={r.plural} description={r.description}
-        actions={<Link href={`${r.path}/novo`} className="btn-dark px-4 py-2.5"><Plus className="h-4 w-4" /> Novo {r.label.toLowerCase()}</Link>} />
+        actions={<>
+          {r.exportPath && <a href={r.exportPath} className="btn-ghost px-4 py-2.5 text-xs">Exportar planilha</a>}
+          <Link href={`${r.path}/novo`} className="btn-dark px-4 py-2.5"><Plus className="h-4 w-4" /> Novo {r.label.toLowerCase()}</Link>
+        </>} />
       <Panel>
         <form className="mb-4 flex flex-col gap-3 sm:flex-row" role="search">
           <div className="relative flex-1">

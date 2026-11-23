@@ -10,6 +10,7 @@ export const leadSchema = z.object({
   service: trimmed(120).optional().default(""),
   message: trimmed(4000).optional().default(""),
   consent: z.literal(true, { error: "É necessário autorizar o uso dos dados" }),
+  marketing: z.boolean().optional().default(false),
   source: trimmed(40).optional().default("site"),
   landing_page: trimmed(300).optional().default(""),
   utm: z.record(z.string().max(40), z.string().max(200)).optional().default({}),

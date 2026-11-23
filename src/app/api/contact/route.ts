@@ -39,7 +39,7 @@ export async function POST(req: Request) {
       const anon = createAnon(env.supabaseUrl, env.supabaseAnonKey, { auth: { persistSession: false } });
       const { error } = await anon.rpc("submit_lead", {
         p_name: data.name, p_email: data.email, p_phone: data.phone, p_company: data.company, p_service: data.service,
-        p_message: data.message, p_consent: true, p_source: data.source, p_utm: data.utm, p_landing_page: data.landing_page,
+        p_message: data.message, p_consent: true, p_source: data.source, p_utm: data.utm, p_landing_page: data.landing_page, p_marketing: data.marketing,
       });
       if (error) {
         const code = Object.keys(ERRORS).find((k) => error.message.includes(k));

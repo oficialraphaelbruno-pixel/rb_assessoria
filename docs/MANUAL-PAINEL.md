@@ -41,6 +41,18 @@ Novo lead → Contato iniciado → Qualificado → Proposta enviada → Negocia�
 - **Converter em cliente** cria o cliente no CRM. **Excluir** atende pedidos de exclusão de dados (LGPD).
 - **Exportar CSV** baixa a lista (abre no Excel).
 
+### Planilhas de contatos
+Em **Leads → Exportar planilha** escolha: todos, só clubes e escolinhas, só empresas, só leads novos ou só quem aceita e-mails. O arquivo abre no Excel/Google Planilhas com nome, empresa/equipe, e-mail, WhatsApp (com link pronto para abrir a conversa), serviço, mensagem, tipo, origem, campanha e etapa. Em **Clientes (CRM)** também há **Exportar planilha**.
+
+### E-mail marketing
+- No formulário do site há uma opção (separada e opcional) “Quero receber por e-mail conteúdos, novidades e oportunidades”. Quem marca entra automaticamente no Resend, no segmento **RB — Leads do site (todos)**, com o tipo (clube/escolinha ou empresa), empresa e serviço.
+- A página **E-mail marketing** mostra a base, filtros por tipo, status de envio ao Resend e exportação.
+- Na ficha do lead: **Registrar consentimento** (quando a pessoa autorizou por outro canal) e **Remover da base** (descadastra no Resend).
+- Para disparar uma campanha, peça ao Claude informando público, assunto e mensagem: ele monta no Resend e só envia após sua aprovação. É necessário um domínio próprio da RB verificado no Resend.
+
+### Tráfego (Meta Ads)
+Investimento, alcance, cliques, CTR, CPC, leads e custo por lead de cada campanha, mais os leads do site vindos da Meta (por UTM). Configuração em `docs/META-ADS.md`.
+
 ### Clientes (CRM)
 Nome, empresa, contatos, serviço, valor mensal, início, dia de vencimento, status e observações. Na ficha: histórico, projetos e pagamentos.
 

@@ -8,6 +8,8 @@ import { HistoryForm } from "@/components/admin/history-form";
 import { LeadEditForm, type LeadRow } from "@/components/admin/lead-edit-form";
 import { addLeadActivity, convertLeadToClient, deleteLead } from "@/lib/admin/crm-actions";
 import { SOURCE_LABEL } from "@/lib/admin/crm-constants";
+import { grantMarketingConsent, revokeMarketingConsent, syncLead } from "@/lib/admin/marketing-actions";
+import { AUDIENCE_LABEL } from "@/lib/resend";
 import { formatDate, whatsappLink } from "@/lib/utils";
 
 export default async function LeadPage({ params }: { params: Promise<{ id: string }> }) {
@@ -53,6 +55,19 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
               ))}
               {!acts?.length && <li className="text-sm text-mist-600">Sem registros.</li>}
             </ol>
+          </Panel>
+          <Panel title="E-mail marketing">
+            <dl className="space-y-2 text-sm">
+              <div><dt className="text-xs text-mist-400">Tipo de público</dt><dd>{AUDIENCE_LABEL[lead.audience] ?? lead.audience}</dd></div>
+              <div><dt className="text-xs text-mist-400">Aceita receber campanhas</dt><dd>{lead.marketing_consent ? `Sim — ${formatDate(lead.marketing_consent_at)}` : "Não"}</dd></div>
+              {lead.marketing_consent && <div><dt className="text-xs text-mist-400">Resend</dt><dd>{lead.resend_synced_at ? `Sincronizado em ${formatDate(lead.resend_synced_at)}` : lead.resend_error ? `Erro: ${lead.resend_error}` : "Pendente"}</dd></div>}
+            </dl>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {lead.marketing_consent ? <>
+                {!lead.resend_synced_at && <ActionButton variant="dark" action={syncLead.bind(null, id)}>Enviar ao Resend</ActionButton>}
+                <ActionButton variant="danger" action={revokeMarketingConsent.bind(null, id)} confirm="Remover este contato da base de campanhas (descadastrar no Resend)?">Remover da base</ActionButton>
+              </> : lead.email && <ActionButton action={grantMarketingConsent.bind(null, id)} confirm="Confirme que este contato autorizou receber e-mails de campanhas da RB (ex.: por escrito no WhatsApp). Registrar consentimento?">Registrar consentimento</ActionButton>}
+            </div>
           </Panel>
           <Panel title="Rastreamento e consentimento">
             <dl className="space-y-2 text-sm">

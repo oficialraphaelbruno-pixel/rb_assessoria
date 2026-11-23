@@ -24,7 +24,7 @@ export function ContactForm({ services, defaultService, source = "site", dark = 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: fd.get("name"), company: fd.get("company"), email: fd.get("email"), phone: fd.get("phone"),
-          service: fd.get("service"), message: fd.get("message"), consent: fd.get("consent") === "on",
+          service: fd.get("service"), message: fd.get("message"), consent: fd.get("consent") === "on", marketing: fd.get("marketing") === "on",
           website: fd.get("website"), source, ...attribution,
         }),
       });
@@ -107,6 +107,10 @@ export function ContactForm({ services, defaultService, source = "site", dark = 
             <Link href="/privacidade" className="underline underline-offset-2 hover:text-teal-500">Política de Privacidade</Link>. *</span>
         </label>
         {err("consent")}
+        <label className={cn("mt-3 flex items-start gap-3 text-sm", dark ? "text-white/70" : "text-mist-600")}>
+          <input type="checkbox" name="marketing" className="mt-0.5 h-4 w-4 shrink-0 accent-teal-500" />
+          <span>Quero receber por e-mail conteúdos, novidades e oportunidades da RB. Posso cancelar quando quiser. (opcional)</span>
+        </label>
       </div>
       {error && <p id="form-error" role="alert" className="text-sm text-red-500 sm:col-span-2">{error}</p>}
       <div className="sm:col-span-2">

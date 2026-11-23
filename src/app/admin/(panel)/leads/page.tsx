@@ -23,7 +23,19 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
   return (
     <>
       <PageHeader title="Leads" description="Funil comercial: Novo lead → Contato iniciado → Qualificado → Proposta enviada → Negociação → Cliente fechado / Perdido."
-        actions={<><a href="/admin/leads/exportar" className="btn-ghost px-4 py-2.5 text-xs">Exportar CSV</a><ManualLeadForm /></>} />
+        actions={<>
+          <details className="relative">
+            <summary className="btn-ghost cursor-pointer list-none px-4 py-2.5 text-xs">Exportar planilha ▾</summary>
+            <div className="absolute right-0 z-20 mt-2 w-64 rounded-xl border border-mist-200 bg-white p-2 text-sm shadow-card">
+              <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href={`/admin/leads/exportar${origem ? `?origem=${origem}` : ""}`}>Todos os contatos{origem ? " (origem filtrada)" : ""}</a>
+              <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?tipo=clube">Só clubes e escolinhas</a>
+              <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?tipo=empresa">Só empresas e profissionais</a>
+              <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?etapa=novo">Só leads novos (sem contato)</a>
+              <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?marketing=1">Só quem aceita e-mails</a>
+            </div>
+          </details>
+          <ManualLeadForm />
+        </>} />
       <form className="mb-4 flex flex-col gap-3 sm:flex-row" role="search">
         <input name="q" defaultValue={q} placeholder="Buscar por nome, empresa, e-mail, telefone…" className="input sm:max-w-sm" aria-label="Buscar leads" />
         <select name="origem" defaultValue={origem} className="input sm:w-48" aria-label="Origem">
