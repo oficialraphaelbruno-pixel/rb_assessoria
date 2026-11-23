@@ -16,8 +16,8 @@ describe("formulário de orçamento", () => {
     expect(leadSchema.safeParse({ ...ok, email: "x" }).success).toBe(false);
     expect(leadSchema.safeParse({ ...ok, phone: "123" }).success).toBe(false);
   });
-  it("honeypot preenchido é rejeitado pelo schema", () => {
-    expect(leadSchema.safeParse({ ...ok, website: "spam" }).success).toBe(false);
+  it("honeypot é aceito pelo schema (a rota descarta em silêncio)", () => {
+    expect(leadSchema.parse({ ...ok, website: "spam" }).website).toBe("spam");
   });
   it("limita tamanho da mensagem", () => {
     expect(leadSchema.safeParse({ ...ok, message: "a".repeat(5000) }).success).toBe(false);

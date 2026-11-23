@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 — 2026-11-24
+- Importação de planilhas (.xlsx/.csv) para Leads e Clientes, com modelos para download, validação linha a linha e tratamento de duplicados. Exportação no mesmo formato do modelo.
+- Cidade em leads e clientes; data de próximo retorno com lista no dashboard e lembrete diário.
+- Site: seção “Segmentos atendidos”, depoimentos (CMS), apresentação do fundador na home, barra fixa de contato no celular, página /planos com comparativo.
+- Conteúdo v2: topo da home, página do fundador (formação, experiência, especialidades, valores e visão), FAQ com 21 perguntas, planos Bronze/Prata/Ouro/Ultra Diamante.
+- Segurança: 68 testes de RLS, testes HTTP, correção do honeypot, 0 vulnerabilidades em dependências.
+
+## 0.2.0 — 2026-11-23
+- Tema claro/escuro no painel; planilhas de contatos; e-mail marketing com Resend; área de tráfego (Meta Ads).
+
 ## 0.1.0 — 2026-11-21 · Etapas 1 a 5 (base completa)
 
 - Planejamento: análise da logomarca, design system, arquitetura, banco de dados com RLS.

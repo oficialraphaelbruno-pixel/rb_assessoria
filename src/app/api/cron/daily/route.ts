@@ -16,10 +16,12 @@ export async function GET(req: Request) {
     admin.from("fin_transactions").select("id, kind, description, amount_cents, due_date").eq("status", "previsto").gte("due_date", today).lte("due_date", tomorrow),
     admin.from("fin_transactions").select("id").eq("status", "previsto").eq("kind", "receita").lt("due_date", today),
   ]);
+  const { count: follow } = await admin.from("leads").select("id", { count: "exact", head: true }).lte("next_followup_at", today).not("stage", "in", "(fechado,perdido)");
   const notes = (due ?? []).map((t) => ({
     kind: "vencimento", title: `${t.kind === "receita" ? "A receber" : "A pagar"} ${t.due_date === today ? "hoje" : "amanhã"}: ${t.description}`,
     body: (t.amount_cents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }), link: `/admin/financeiro/lancamentos/${t.id}`,
   }));
+  if (follow) notes.push({ kind: "followup", title: `${follow} lead(s) com retorno marcado para hoje ou atrasado`, body: "Veja a lista no dashboard.", link: "/admin" });
   if (overdue?.length) notes.push({ kind: "vencimento", title: `${overdue.length} recebimento(s) em atraso`, body: "Verifique a inadimplência no financeiro.", link: "/admin/financeiro" });
   if (notes.length) {
     await admin.from("notifications").insert(notes);

@@ -11,11 +11,11 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
   await requireAdmin();
   const { q = "", origem = "", view = "funil" } = await searchParams;
   const db = await createClient();
-  let query = db.from("leads").select("id, name, company, email, phone, service, source, stage, created_at, estimated_value_cents").order("created_at", { ascending: false }).limit(500);
+  let query = db.from("leads").select("id, name, company, email, phone, service, source, stage, created_at, estimated_value_cents, next_followup_at, city").order("created_at", { ascending: false }).limit(500);
   if (origem && SOURCES.includes(origem)) query = query.eq("source", origem);
   if (q.trim()) {
     const s = q.trim().slice(0, 80).replace(/[%,()*]/g, " ");
-    query = query.or(`name.ilike.%${s}%,company.ilike.%${s}%,email.ilike.%${s}%,phone.ilike.%${s}%,service.ilike.%${s}%`);
+    query = query.or(`name.ilike.%${s}%,company.ilike.%${s}%,email.ilike.%${s}%,phone.ilike.%${s}%,service.ilike.%${s}%,city.ilike.%${s}%`);
   }
   const { data } = await query;
   const leads = (data ?? []) as (BoardLead & { email: string | null; phone: string | null })[];
@@ -32,8 +32,10 @@ export default async function LeadsPage({ searchParams }: { searchParams: Promis
               <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?tipo=empresa">Só empresas e profissionais</a>
               <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?etapa=novo">Só leads novos (sem contato)</a>
               <a className="block rounded-lg px-3 py-2 hover:bg-mist-50" href="/admin/leads/exportar?marketing=1">Só quem aceita e-mails</a>
+              <a className="block rounded-lg px-3 py-2 text-mist-600 hover:bg-mist-50" href="/admin/leads/exportar?formato=csv">Todos em CSV</a>
             </div>
           </details>
+          <Link href="/admin/leads/importar" className="btn-ghost px-4 py-2.5 text-xs">Importar planilha</Link>
           <ManualLeadForm />
         </>} />
       <form className="mb-4 flex flex-col gap-3 sm:flex-row" role="search">

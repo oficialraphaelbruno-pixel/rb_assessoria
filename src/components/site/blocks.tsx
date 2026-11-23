@@ -124,7 +124,7 @@ export function PlansGrid({ plans }: { plans: Plan[] }) {
             <ul className="mt-6 flex-1 space-y-2.5 text-sm">
               {p.features.map((f) => <li key={f} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-turq-400" aria-hidden />{f}</li>)}
             </ul>
-            <Link href={`/contato?servico=${encodeURIComponent("Sistemas SaaS — Plano " + p.name)}#orcamento`} className={cn("mt-8", p.highlighted ? "btn-primary" : "btn-dark")}>
+            <Link href={`/contato?servico=${encodeURIComponent("Plano " + p.name)}#orcamento`} className={cn("mt-8", p.highlighted ? "btn-primary" : "btn-dark")}>
               {p.cta_label || "Solicitar proposta"}
             </Link>
           </div>

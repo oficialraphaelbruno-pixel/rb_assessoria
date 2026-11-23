@@ -21,6 +21,10 @@ export function ManualLeadForm() {
           <input name="phone" placeholder="WhatsApp" className="input" aria-label="WhatsApp" />
           <input name="email" type="email" placeholder="E-mail" className="input" aria-label="E-mail" />
         </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <input name="company" placeholder="Empresa / equipe" className="input" aria-label="Empresa ou equipe" />
+          <input name="city" placeholder="Cidade / UF" className="input" aria-label="Cidade" />
+        </div>
         <input name="service" placeholder="Serviço de interesse" className="input" aria-label="Serviço" />
         <select name="source" className="input" aria-label="Origem" defaultValue="instagram">{SOURCES.map((s) => <option key={s} value={s}>{SOURCE_LABEL[s]}</option>)}</select>
         <textarea name="message" rows={3} placeholder="Observações" className="input" aria-label="Observações" />

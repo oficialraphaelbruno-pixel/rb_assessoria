@@ -33,6 +33,7 @@ export function Footer({ settings, services }: { settings: SettingsMap; services
         <div className="md:col-span-2">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-white">Empresa</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
+            <li><Link className="hover:text-turq-300" href="/planos">Planos</Link></li>
             <li><Link className="hover:text-turq-300" href="/clientes-e-projetos">Clientes & Projetos</Link></li>
             <li><Link className="hover:text-turq-300" href="/quem-esta-por-tras-da-rb">Quem está por trás da RB</Link></li>
             <li><Link className="hover:text-turq-300" href="/contato">Contato</Link></li>

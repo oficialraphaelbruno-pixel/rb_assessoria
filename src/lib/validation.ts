@@ -14,7 +14,7 @@ export const leadSchema = z.object({
   source: trimmed(40).optional().default("site"),
   landing_page: trimmed(300).optional().default(""),
   utm: z.record(z.string().max(40), z.string().max(200)).optional().default({}),
-  website: z.string().max(0).optional().default(""), // honeypot
+  website: z.string().max(500).optional().default(""), // honeypot: tratado na rota (finge sucesso para bots)
 });
 export type LeadInput = z.infer<typeof leadSchema>;
 

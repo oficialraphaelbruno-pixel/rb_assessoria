@@ -55,6 +55,8 @@ export async function updateLead(id: string, _prev: ActionResult | null, fd: For
     notes: String(fd.get("notes") || "").slice(0, 8000) || null,
     lost_reason: String(fd.get("lost_reason") || "").slice(0, 500) || null,
     audience: ["clube", "empresa", "outro"].includes(String(fd.get("audience"))) ? String(fd.get("audience")) : "outro",
+    city: String(fd.get("city") || "").trim().slice(0, 80) || null,
+    next_followup_at: /^\d{4}-\d{2}-\d{2}$/.test(String(fd.get("next_followup_at") || "")) ? String(fd.get("next_followup_at")) : null,
   };
   if (row.name.length < 2) return { ok: false, error: "Informe o nome." };
   const { db } = await log("update", "leads", id);
@@ -78,6 +80,8 @@ export async function createManualLead(_prev: ActionResult | null, fd: FormData)
     phone: String(fd.get("phone") || "").trim() || null,
     service: String(fd.get("service") || "").trim() || null,
     message: String(fd.get("message") || "").trim() || null,
+    company: String(fd.get("company") || "").trim().slice(0, 160) || null,
+    city: String(fd.get("city") || "").trim().slice(0, 80) || null,
     consent: fd.get("consent") === "on",
     consent_at: fd.get("consent") === "on" ? new Date().toISOString() : null,
     consent_text: fd.get("consent") === "on" ? "Consentimento obtido pela equipe em atendimento direto." : null,

@@ -25,6 +25,7 @@ export interface ResourceDef {
   filters?: { name: string; label: string; options: { value: string; label: string }[] }[];
   description?: string;
   exportPath?: string;
+  importPath?: string;
 }
 
 const status: FieldDef = { name: "status", label: "Status", type: "select", options: [{ value: "draft", label: "Rascunho (oculto)" }, { value: "published", label: "Publicado" }] };
@@ -55,9 +56,9 @@ export const RESOURCES: Record<string, ResourceDef> = {
     ],
   },
   plans: {
-    key: "plans", table: "plans", label: "Plano", plural: "Planos SaaS", path: "/admin/planos", adminOnly: false,
-    publishable: true, affectsSite: true, previewPath: "/servicos/sistemas-saas", titleField: "name",
-    description: "Planos do sistema de agendamento (Bronze, Prata, Ouro, Ultra Diamante). Deixe o preço vazio para exibir “Sob consulta”.",
+    key: "plans", table: "plans", label: "Plano", plural: "Planos", path: "/admin/planos", adminOnly: false,
+    publishable: true, affectsSite: true, previewPath: "/planos", titleField: "name",
+    description: "Planos da RB (Bronze, Prata, Ouro e Ultra Diamante) exibidos em /planos e na página inicial. Deixe o preço vazio para exibir “Sob consulta”.",
     orderBy: [{ column: "sort_order", ascending: true }], searchColumns: ["name"],
     columns: [{ name: "name", label: "Plano" }, { name: "price_cents", label: "Preço", format: "money" }, { name: "billing_period", label: "Período" }, { name: "status", label: "Status", format: "status" }],
     fields: [
@@ -112,6 +113,21 @@ export const RESOURCES: Record<string, ResourceDef> = {
       sort, status,
     ],
   },
+  testimonials: {
+    key: "testimonials", table: "testimonials", label: "Depoimento", plural: "Depoimentos", path: "/admin/depoimentos", adminOnly: false,
+    publishable: true, affectsSite: true, previewPath: "/", titleField: "author_name",
+    description: "Depoimentos reais de clientes, publicados somente com autorização de quem falou.",
+    orderBy: [{ column: "sort_order", ascending: true }], searchColumns: ["author_name", "company", "quote"],
+    columns: [{ name: "photo_url", label: "", format: "image" }, { name: "author_name", label: "Nome" }, { name: "company", label: "Empresa" }, { name: "status", label: "Status", format: "status" }],
+    fields: [
+      { name: "author_name", label: "Nome de quem deu o depoimento", type: "text", required: true },
+      { name: "author_role", label: "Cargo / função", type: "text" },
+      { name: "company", label: "Empresa / equipe", type: "text" },
+      { name: "photo_url", label: "Foto (opcional)", type: "image" },
+      { name: "quote", label: "Depoimento", type: "textarea", required: true, span: 2 },
+      sort, status,
+    ],
+  },
   knowledge: {
     key: "knowledge", table: "knowledge_items", label: "Item de conhecimento", plural: "Base de conhecimento", path: "/admin/chatbot/conhecimento", adminOnly: true,
     titleField: "title", description: "Informações oficiais que o chatbot usa para responder. Escreva de forma objetiva; o bot não inventa o que não estiver aqui.",
@@ -126,15 +142,16 @@ export const RESOURCES: Record<string, ResourceDef> = {
     ],
   },
   crm: {
-    key: "crm", table: "crm_clients", label: "Cliente", plural: "Clientes (CRM)", path: "/admin/clientes", adminOnly: true, titleField: "name", exportPath: "/admin/clientes/exportar",
-    orderBy: [{ column: "name", ascending: true }], searchColumns: ["name", "company", "email", "phone"],
-    columns: [{ name: "name", label: "Nome" }, { name: "company", label: "Empresa" }, { name: "service", label: "Serviço" }, { name: "monthly_value_cents", label: "Mensal", format: "money" }, { name: "due_day", label: "Venc." }, { name: "status", label: "Status", format: "badge" }],
+    key: "crm", table: "crm_clients", label: "Cliente", plural: "Clientes (CRM)", path: "/admin/clientes", adminOnly: true, titleField: "name", exportPath: "/admin/clientes/exportar", importPath: "/admin/clientes/importar",
+    orderBy: [{ column: "name", ascending: true }], searchColumns: ["name", "company", "email", "phone", "city"],
+    columns: [{ name: "name", label: "Nome" }, { name: "company", label: "Empresa" }, { name: "city", label: "Cidade" }, { name: "service", label: "Serviço" }, { name: "monthly_value_cents", label: "Mensal", format: "money" }, { name: "due_day", label: "Venc." }, { name: "status", label: "Status", format: "badge" }],
     filters: [{ name: "status", label: "Status", options: [{ value: "ativo", label: "Ativos" }, { value: "pausado", label: "Pausados" }, { value: "encerrado", label: "Encerrados" }, { value: "prospect", label: "Prospects" }] }],
     fields: [
       { name: "name", label: "Nome", type: "text", required: true },
       { name: "company", label: "Empresa", type: "text" },
       { name: "phone", label: "Telefone/WhatsApp", type: "text" },
       { name: "email", label: "E-mail", type: "email" },
+      { name: "city", label: "Cidade / UF", type: "text" },
       { name: "service", label: "Serviço contratado", type: "text" },
       { name: "monthly_value_cents", label: "Valor mensal (R$)", type: "money" },
       { name: "start_date", label: "Data de início", type: "date" },

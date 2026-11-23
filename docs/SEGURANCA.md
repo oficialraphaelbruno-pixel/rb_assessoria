@@ -36,7 +36,22 @@
 | Projeto Supabase criado na organização “Julia Santos Epil” | É um projeto **separado** (não altera o da Júlia), mas compartilha a organização/cota gratuita. Pode ser transferido para uma organização própria da RB depois. |
 | Dependência do provedor de IA | Camada de abstração + resposta estática + corte por orçamento. |
 
-## Testes executados
+## Testes executados (23/11/2026)
+
+**Permissões no banco (RLS)**: 68/68 aprovados, simulando cada papel dentro do Postgres (scripts em `supabase/tests/`):
+- Visitante anônimo: não lê nenhuma das 21 tabelas/visões privadas, não vê rascunhos, não escreve, não executa funções internas, não envia arquivos; formulário público rejeita dados inválidos.
+- Usuário logado sem aprovação: não consegue se promover a administrador, não lê dados, não forja auditoria, não envia mídia.
+- Editor: edita conteúdo, mas não acessa leads, CRM, financeiro, chatbot, documentos ou notificações.
+
+**HTTP (servidor de produção local)**: todas as rotas do painel e exportações redirecionam para o login sem sessão; APIs rejeitam outra origem (403), JSON inválido (400), dados inválidos (422); webhook e cron exigem token (401); pré-visualização exige login; sem *open redirect* no callback; cabeçalhos de segurança presentes; `/admin` com `noindex` e `no-store`; configuração do chatbot não expõe regras.
+- Corrigido: o campo anti-spam (honeypot) revelava o motivo da recusa; agora o envio de robôs recebe resposta de sucesso e é descartado.
+- Corrigido: leitura de planilhas Excel re-salvas por outros programas (notas no cabeçalho quebravam a leitura).
+
+**Dependências**: `npm audit` = 0 vulnerabilidades (versões corrigidas de `postcss` e `uuid` forçadas via *overrides*).
+
+**Testes automatizados**: 22 (vitest), incluindo importação/exportação de planilhas.
+
+## Testes anteriores
 
 - 16 testes automatizados (`npm test`): conversão de valores, bloqueio de URLs perigosas, CSV injection, parser OFX/CSV, validação do formulário (consentimento, honeypot, limites), validação do chat, regras do prompt e cálculo de custo.
 - Typecheck estrito e build de produção.

@@ -47,6 +47,10 @@ export const SETTINGS_SCHEMA: SettingDef[] = [
     t("eyebrow", "Chamada pequena"), ta("title", "Título"),
     items("items", "Diferenciais", [t("title", "Título"), ta("text", "Texto"), t("icon", "Ícone", "handshake, chart, trophy, layers, sparkles, shield, target, zap")]),
   ]},
+  { key: "segments", label: "Segmentos atendidos", group: "Página inicial", fields: [
+    t("eyebrow", "Chamada pequena"), ta("title", "Título"),
+    items("items", "Segmentos", [t("title", "Título"), ta("text", "Texto"), t("icon", "Ícone", "trophy, users, target, zap, handshake, chart, layers, sparkles")]),
+  ]},
   { key: "process", label: "Como trabalhamos", group: "Página inicial", fields: [
     t("eyebrow", "Chamada pequena"), ta("title", "Título"), items("steps", "Etapas", [t("title", "Etapa"), ta("text", "Descrição")]),
   ]},
@@ -60,8 +64,8 @@ export const SETTINGS_SCHEMA: SettingDef[] = [
     ta("title", "Título"), ta("text", "Texto"), t("button_label", "Texto do botão"),
   ]},
   { key: "home_sections", label: "Seções visíveis na página inicial", group: "Página inicial", fields: [
-    bool("challenge", "O desafio"), bool("services", "Serviços"), bool("differentials", "Diferenciais"), bool("process", "Como trabalhamos"),
-    bool("portfolio", "Portfólio / cases"), bool("clients", "Clientes atendidos (logos)"), bool("saas", "Soluções SaaS"),
+    bool("challenge", "O desafio"), bool("segments", "Segmentos atendidos"), bool("testimonials", "Depoimentos"), bool("services", "Serviços"), bool("differentials", "Diferenciais"), bool("process", "Como trabalhamos"),
+    bool("portfolio", "Portfólio / cases"), bool("clients", "Clientes atendidos (logos)"), bool("saas", "Soluções SaaS"), bool("plans", "Planos"),
     bool("about", "Sobre a RB"), bool("faq", "Perguntas frequentes"), bool("contact", "Formulário de contato"),
   ]},
   { key: "founder", label: "Quem está por trás da RB", group: "Páginas", fields: [
@@ -74,6 +78,9 @@ export const SETTINGS_SCHEMA: SettingDef[] = [
   { key: "clubs", label: "Clubes & Escolinhas", group: "Páginas", fields: [
     t("eyebrow", "Chamada pequena"), ta("title", "Título"), ta("subtitle", "Subtítulo"),
     items("benefits", "Benefícios", [t("title", "Título"), ta("text", "Texto")]), ta("closing", "Fechamento"), t("cta_label", "Botão — texto"),
+  ]},
+  { key: "plans_page", label: "Página de planos", group: "Páginas", description: "Os planos em si (nome, recursos, preço) são editados em Site → Planos.", fields: [
+    t("eyebrow", "Chamada pequena"), ta("title", "Título"), ta("subtitle", "Subtítulo"), ta("note", "Observação abaixo dos planos"),
   ]},
   { key: "privacy", label: "Política de privacidade", group: "Páginas", fields: [
     t("updated_at", "Atualizada em (AAAA-MM-DD)"), t("controller", "Controlador dos dados"), t("contact_email", "E-mail do encarregado/contato"),
@@ -96,12 +103,14 @@ export const DEFAULT_SETTINGS = {
   challenge: { eyebrow: "", title: "", items: [] as string[], closing: "" },
   differentials: { eyebrow: "", title: "", items: [] as { title: string; text: string; icon?: string }[] },
   process: { eyebrow: "", title: "", steps: [] as { title: string; text: string }[] },
+  segments: { eyebrow: "", title: "", items: [] as { title: string; text: string; icon?: string }[] },
   saas: { eyebrow: "", title: "", text: "", cta_label: "", cta_href: "/servicos/sistemas-saas" },
   about: { eyebrow: "", title: "", text: "", pillars: [] as string[] },
   cta_final: { title: "", text: "", button_label: "Enviar" },
-  home_sections: { challenge: true, services: true, differentials: true, process: true, portfolio: true, clients: true, saas: true, about: true, faq: true, contact: true },
+  home_sections: { plans: true, challenge: true, segments: true, testimonials: true, services: true, differentials: true, process: true, portfolio: true, clients: true, saas: true, about: true, faq: true, contact: true },
   founder: { eyebrow: "", headline: "", name: "", role: "", photo_url: "", photo_alt: "", bio: [] as string[], quote: "", experience: "", specialties: [] as string[], values: [] as string[], vision: "", instagram_url: "", linkedin_url: "" },
   clubs: { eyebrow: "", title: "", subtitle: "", benefits: [] as { title: string; text: string }[], closing: "", cta_label: "Solicitar orçamento" },
+  plans_page: { eyebrow: "Planos", title: "Planos", subtitle: "", note: "" },
   privacy: { updated_at: "", controller: "", contact_email: "", body: "" },
   seo: { site_url: "", title: "RB Assessoria & Comunicação", title_template: "%s | RB Assessoria & Comunicação", description: "", og_image: "", keywords: "" },
   analytics: { ga4_id: "", meta_pixel_id: "", google_site_verification: "" },

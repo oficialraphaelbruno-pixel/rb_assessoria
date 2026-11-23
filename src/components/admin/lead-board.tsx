@@ -5,7 +5,7 @@ import { updateLeadStage } from "@/lib/admin/crm-actions";
 import { STAGES, SOURCE_LABEL } from "@/lib/admin/crm-constants";
 import { cn, formatBRL } from "@/lib/utils";
 
-export interface BoardLead { id: string; name: string; company: string | null; service: string | null; source: string; stage: string; created_at: string; estimated_value_cents: number | null }
+export interface BoardLead { id: string; name: string; company: string | null; service: string | null; source: string; stage: string; created_at: string; estimated_value_cents: number | null; next_followup_at?: string | null; city?: string | null }
 
 /** Funil em colunas com arrastar-e-soltar (desktop) e seletor de etapa (mobile/teclado). */
 export function LeadBoard({ leads }: { leads: BoardLead[] }) {
@@ -40,7 +40,8 @@ export function LeadBoard({ leads }: { leads: BoardLead[] }) {
                       {STAGES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
                     </select>
                   </div>
-                  <p className="mt-1.5 text-[11px] text-mist-400">{new Date(l.created_at).toLocaleDateString("pt-BR")}</p>
+                  <p className="mt-1.5 text-[11px] text-mist-400">{new Date(l.created_at).toLocaleDateString("pt-BR")}{l.city ? ` · ${l.city}` : ""}</p>
+                  {l.next_followup_at && <p className={cn("mt-1 text-[11px] font-semibold", l.next_followup_at <= new Date().toLocaleDateString("sv-SE") ? "text-red-600" : "text-teal-600")}>Retorno: {l.next_followup_at.split("-").reverse().join("/")}</p>}
                 </li>
               ))}
               {!items.length && <li className="rounded-xl border border-dashed border-mist-200 p-4 text-center text-xs text-mist-400">Arraste leads para cá</li>}

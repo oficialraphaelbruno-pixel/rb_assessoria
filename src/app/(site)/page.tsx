@@ -4,11 +4,11 @@ import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { ClientLogos, CmsImage, ContactSection, FaqList, PlansGrid, PortfolioCard, ServiceCard } from "@/components/site/blocks";
 import { Icon } from "@/components/ui/icon";
-import { getFaqs, getPlans, getPortfolio, getServices, getSettings } from "@/lib/content";
+import { getFaqs, getPlans, getPortfolio, getServices, getSettings, getTestimonials } from "@/lib/content";
 import { safeUrl } from "@/lib/utils";
 
 export default async function HomePage() {
-  const [s, services, portfolio, faqs, plans] = await Promise.all([getSettings(), getServices(), getPortfolio(), getFaqs(), getPlans()]);
+  const [s, services, portfolio, faqs, plans, testimonials] = await Promise.all([getSettings(), getServices(), getPortfolio(), getFaqs(), getPlans(), getTestimonials()]);
   const show = s.home_sections;
   const homeServices = services.filter((x) => x.show_on_home);
   const homeFaqs = faqs.filter((f) => f.show_on_home);
@@ -58,6 +58,24 @@ export default async function HomePage() {
               ))}
             </ul>
             {s.challenge.closing && <p className="mt-10 border-l-4 border-turq-400 pl-5 text-lg font-semibold italic text-navy-800">{s.challenge.closing}</p>}
+          </div>
+        </section>
+      )}
+
+      {/* SEGMENTOS */}
+      {show.segments && s.segments.items.length > 0 && (
+        <section className="section">
+          <div className="container-rb">
+            <SectionHeading eyebrow={s.segments.eyebrow} title={s.segments.title} center />
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {s.segments.items.map((it, i) => (
+                <Reveal key={it.title} delay={i * 60} className="group h-full rounded-xl2 border border-mist-200 bg-gradient-to-b from-white to-turq-50/60 p-6 transition hover:-translate-y-1 hover:border-turq-300 hover:shadow-glow">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-navy-800 text-turq-300 transition group-hover:bg-turq-400 group-hover:text-ink-900"><Icon name={it.icon} className="h-5 w-5" /></span>
+                  <h3 className="mt-5 font-bold text-navy-800">{it.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-mist-600">{it.text}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -150,6 +168,28 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* DEPOIMENTOS */}
+      {show.testimonials && testimonials.length > 0 && (
+        <section className="section relative overflow-hidden bg-ink-900 text-white">
+          <div className="grid-tech pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+          <div className="container-rb relative">
+            <SectionHeading eyebrow="Depoimentos" title="O que dizem os clientes da RB" dark center />
+            <div className={`mt-12 grid gap-6 ${testimonials.length >= 3 ? "lg:grid-cols-3" : "md:grid-cols-2"}`}>
+              {testimonials.slice(0, 6).map((t, i) => (
+                <Reveal key={t.id} delay={i * 80} className="card-dark flex h-full flex-col p-7">
+                  <Quote className="h-8 w-8 text-turq-400" aria-hidden />
+                  <blockquote className="mt-4 flex-1 leading-relaxed text-white/85">“{t.quote}”</blockquote>
+                  <figcaption className="mt-6 flex items-center gap-3">
+                    {t.photo_url && <CmsImage src={t.photo_url} alt={t.author_name} className="h-11 w-11 shrink-0 rounded-full" sizes="44px" />}
+                    <span><span className="block font-semibold">{t.author_name}</span><span className="text-sm text-white/60">{[t.author_role, t.company].filter(Boolean).join(" · ")}</span></span>
+                  </figcaption>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* SAAS */}
       {show.saas && s.saas.title && (
         <section className="section">
@@ -171,14 +211,24 @@ export default async function HomePage() {
                 })}
               </Reveal>
             </div>
-            {plans.length > 0 && <div className="mt-20"><PlansGrid plans={plans} /></div>}
+          </div>
+        </section>
+      )}
+
+      {/* PLANOS */}
+      {show.plans && plans.length > 0 && (
+        <section className="section bg-mist-50" id="planos">
+          <div className="container-rb">
+            <SectionHeading eyebrow={s.plans_page.eyebrow || "Planos"} title={s.plans_page.title} text={s.plans_page.subtitle} center />
+            <div className="mt-12"><PlansGrid plans={plans} /></div>
+            <p className="mt-8 text-center"><Link href="/planos" className="font-semibold text-teal-600 hover:underline">Comparar planos em detalhes →</Link></p>
           </div>
         </section>
       )}
 
       {/* SOBRE */}
       {show.about && s.about.title && (
-        <section className="section bg-mist-50">
+        <section className="section">
           <div className="container-rb grid gap-12 lg:grid-cols-2">
             <SectionHeading eyebrow={s.about.eyebrow} title={s.about.title} text={s.about.text} />
             <div className="flex flex-col justify-center gap-4">
@@ -189,8 +239,14 @@ export default async function HomePage() {
                 </Reveal>
               ))}
               {s.founder.name && (
-                <Link href="/quem-esta-por-tras-da-rb" className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-teal-600 hover:underline">
-                  <Quote className="h-4 w-4" aria-hidden /> Conheça quem está por trás da RB
+                <Link href="/quem-esta-por-tras-da-rb" className="group mt-2 flex items-center gap-4 rounded-xl2 bg-navy-800 p-4 text-white transition hover:bg-navy-700">
+                  <CmsImage src={s.founder.photo_url} alt={s.founder.photo_alt || s.founder.name} className="h-16 w-16 shrink-0 rounded-full border-2 border-turq-400" sizes="64px" />
+                  <span className="min-w-0">
+                    <span className="block text-xs uppercase tracking-wider text-turq-300">Quem está por trás da RB</span>
+                    <span className="block font-semibold">{s.founder.name}{s.founder.role ? ` · ${s.founder.role}` : ""}</span>
+                    {s.founder.quote && <span className="mt-0.5 line-clamp-2 block text-sm text-white/70">“{s.founder.quote}”</span>}
+                  </span>
+                  <ArrowRight className="ml-auto h-5 w-5 shrink-0 text-turq-300 transition group-hover:translate-x-1" aria-hidden />
                 </Link>
               )}
             </div>

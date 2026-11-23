@@ -62,8 +62,9 @@ export default async function ServicePage({ params }: Props) {
       {slug === "sistemas-saas" && (
         <section className="section bg-mist-50">
           <div className="container-rb">
-            <SectionHeading eyebrow="Planos" title="Bronze, Prata, Ouro e Ultra Diamante" text={plans.length ? "Escolha o plano ideal para o seu momento. Os recursos podem ser ajustados no orçamento." : "Os planos estão sendo finalizados. Solicite uma proposta e apresentamos as opções para o seu negócio."} center />
+            <SectionHeading eyebrow="Planos" title="Sistema próprio no plano Ultra Diamante ou sob medida" text="O sistema de agendamento e gestão faz parte do plano Ultra Diamante e também pode ser contratado separadamente, com recursos ajustados ao seu negócio." center />
             {plans.length > 0 && <div className="mt-12"><PlansGrid plans={plans} /></div>}
+            <p className="mt-8 text-center"><Link href="/planos" className="font-semibold text-teal-600 hover:underline">Ver todos os planos →</Link></p>
           </div>
         </section>
       )}

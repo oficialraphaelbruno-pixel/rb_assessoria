@@ -3,7 +3,7 @@ import { cache } from "react";
 import { draftMode } from "next/headers";
 import { createPublicClient } from "@/lib/supabase/public";
 import { createClient } from "@/lib/supabase/server";
-import type { Faq, PortfolioClient, Plan, Service } from "@/lib/types";
+import type { Faq, PortfolioClient, Plan, Service, Testimonial } from "@/lib/types";
 import { DEFAULT_SETTINGS, type SettingsMap, type SettingKey } from "@/lib/settings-defaults";
 
 /** Em modo de pré-visualização (painel), lê rascunhos com a sessão do admin. */
@@ -66,4 +66,12 @@ export const getPortfolio = cache(async (): Promise<PortfolioClient[]> => {
 export const getPortfolioClient = cache(async (slug: string) => {
   const list = await getPortfolio();
   return list.find((c) => c.slug === slug) ?? null;
+});
+
+export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
+  const { preview, db } = await getReader();
+  let q = db.from("testimonials").select("*").order("sort_order").order("created_at", { ascending: false });
+  if (!preview) q = q.eq("status", "published");
+  const { data } = await q;
+  return (data as Testimonial[]) ?? [];
 });

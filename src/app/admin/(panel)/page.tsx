@@ -36,6 +36,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const prevSince = new Date(Date.now() - 2 * days * 864e5).toISOString();
   const yearAgo = new Date(); yearAgo.setUTCMonth(yearAgo.getUTCMonth() - 11, 1);
 
+  const today = new Date().toLocaleDateString("sv-SE", { timeZone: "America/Sao_Paulo" });
+  const { data: followups } = await db.from("leads").select("id, name, company, phone, next_followup_at, stage").lte("next_followup_at", today)
+    .not("stage", "in", "(fechado,perdido)").order("next_followup_at").limit(15);
   const [{ data: leads }, { count: prevLeads }, { data: leads12 }, { count: crmActive }, { count: projActive }, { count: projDone }, { count: chats }, { count: handoffs }, fin] = await Promise.all([
     db.from("leads").select("source, stage, service, created_at").gte("created_at", since),
     db.from("leads").select("id", { count: "exact", head: true }).gte("created_at", prevSince).lt("created_at", since),
@@ -68,6 +71,18 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         actions={<div className="flex gap-1">{[["7", "7 dias"], ["30", "30 dias"], ["90", "90 dias"], ["365", "12 meses"]].map(([v, l]) => (
           <Link key={v} href={`?periodo=${v}`} className={`rounded-lg px-3 py-2 text-sm ${String(days) === v ? "bg-navy-800 text-white" : "bg-white"}`}>{l}</Link>))}</div>} />
       {erro === "permissao" && <p role="alert" className="mb-4 rounded-xl bg-amber-50 p-3 text-sm text-amber-800">Você não tem permissão para acessar aquela área.</p>}
+      {!!followups?.length && (
+        <Panel title={`Retornos para hoje (${followups.length})`} className="mb-6 border-amber-200">
+          <ul className="divide-y divide-mist-100 text-sm">
+            {followups.map((f) => (
+              <li key={f.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                <Link href={`/admin/leads/${f.id}`} className="font-medium hover:text-teal-600">{f.name}{f.company ? ` — ${f.company}` : ""}</Link>
+                <span className={f.next_followup_at! < today ? "text-red-600" : "text-amber-700"}>{f.next_followup_at! < today ? "Atrasado desde " : "Hoje · "}{f.next_followup_at!.split("-").reverse().join("/")}</span>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      )}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Link href="/admin/leads"><Stat label={`Leads (${days} dias)`} value={String(L.length)} hint={growth == null ? "Sem período anterior para comparar" : `${growth >= 0 ? "+" : ""}${growth}% vs. período anterior`} tone="dark" /></Link>
         <Stat label="Solicitações de orçamento" value={String(L.filter((l) => l.source === "site").length)} hint={`${won} lead(s) fechado(s) no período`} />

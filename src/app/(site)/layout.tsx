@@ -5,6 +5,7 @@ import { Footer } from "@/components/site/footer";
 import { ChatWidget } from "@/components/site/chat-widget";
 import { Attribution } from "@/components/site/attribution";
 import { Analytics } from "@/components/site/analytics";
+import { MobileCta } from "@/components/site/mobile-cta";
 import { getServices, getSettings } from "@/lib/content";
 import { whatsappLink } from "@/lib/utils";
 
@@ -28,8 +29,9 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         </div>
       )}
       <Header logo={settings.brand.logo_url} logoAlt={settings.brand.logo_alt} services={nav} />
-      <main id="conteudo">{children}</main>
+      <main id="conteudo" className="pb-16 md:pb-0">{children}</main>
       <Footer settings={settings} services={nav} />
+      <MobileCta whatsappHref={wa} />
       <ChatWidget whatsappHref={wa} />
       <Attribution />
       <Analytics ga4={settings.analytics.ga4_id} pixel={settings.analytics.meta_pixel_id} />

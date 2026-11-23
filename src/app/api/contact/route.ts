@@ -19,6 +19,10 @@ export async function POST(req: Request) {
   let body: unknown;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "Requisição inválida." }, { status: 400 }); }
 
+  // honeypot: robôs preenchem o campo invisível. Resposta de sucesso, sem gravar nada e sem revelar o motivo.
+  if (body && typeof body === "object" && typeof (body as { website?: unknown }).website === "string" && (body as { website: string }).website.trim()) {
+    return NextResponse.json({ ok: true });
+  }
   const parsed = leadSchema.safeParse(body);
   if (!parsed.success) {
     const fieldErrors = Object.fromEntries(parsed.error.issues.map((i) => [String(i.path[0]), i.message]));

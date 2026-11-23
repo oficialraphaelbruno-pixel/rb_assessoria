@@ -26,6 +26,7 @@ export function Header({ logo, logoAlt, services }: { logo: string; logoAlt: str
   }, [open]);
 
   const links = [
+    { href: "/planos", label: "Planos" },
     { href: "/clientes-e-projetos", label: "Clientes & Projetos" },
     { href: "/clubes-e-escolinhas", label: "Clubes" },
     { href: "/quem-esta-por-tras-da-rb", label: "Quem somos" },

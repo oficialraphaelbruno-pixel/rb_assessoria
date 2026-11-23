@@ -28,3 +28,5 @@ export interface PortfolioClient {
 }
 
 export type Json = Record<string, unknown>;
+
+export interface Testimonial { id: string; author_name: string; author_role: string | null; company: string | null; quote: string; photo_url: string | null; sort_order: number; status: Status }

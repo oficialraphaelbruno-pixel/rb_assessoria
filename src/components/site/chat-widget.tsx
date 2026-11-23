@@ -89,14 +89,14 @@ export function ChatWidget({ whatsappHref }: { whatsappHref: string | null }) {
     <>
       <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-controls="rb-chat"
         aria-label={open ? "Fechar atendimento" : "Abrir atendimento"}
-        className="fixed bottom-5 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-navy-800 text-white shadow-glow transition hover:scale-105 hover:bg-navy-700">
+        className="fixed bottom-3 right-3 z-50 inline-flex h-14 w-14 md:bottom-5 md:right-5 items-center justify-center rounded-full bg-navy-800 text-white shadow-glow transition hover:scale-105 hover:bg-navy-700">
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
         {!open && <span className="absolute right-0 top-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-turq-400" aria-hidden />}
       </button>
 
       {open && (
         <section id="rb-chat" role="dialog" aria-label="Atendimento RB" aria-modal="false"
-          className="fixed inset-x-3 bottom-24 z-50 flex max-h-[min(640px,calc(100dvh-8rem))] flex-col overflow-hidden rounded-2xl border border-mist-200 bg-white shadow-2xl sm:inset-x-auto sm:right-5 sm:w-[380px]">
+          className="fixed inset-x-3 bottom-20 z-50 flex md:bottom-24 max-h-[min(640px,calc(100dvh-8rem))] flex-col overflow-hidden rounded-2xl border border-mist-200 bg-white shadow-2xl sm:inset-x-auto sm:right-5 sm:w-[380px]">
           <header className="flex items-center gap-3 bg-navy-800 px-4 py-3 text-white">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-turq-400/20 text-turq-300"><Bot className="h-5 w-5" /></span>
             <div className="min-w-0 flex-1">
