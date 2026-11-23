@@ -1,5 +1,14 @@
 # Publicação e operação
 
+## Estado atual (23/11/2026)
+
+- Vercel: projeto `rb-assessoria` (time Rapha, plano Hobby), região das funções `gru1` (São Paulo), Node 22.
+- URL: https://rb-assessoria-rapha16.vercel.app (pública). Previews de branches exigem login na Vercel.
+- Variáveis já configuradas: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_SITE_URL`, `IP_HASH_SALT`, `CRON_SECRET`.
+- **Falta (manual):** `SUPABASE_SERVICE_ROLE_KEY` (Supabase → Project Settings → API Keys → chave secreta) e, ao ativar o chatbot, `ANTHROPIC_API_KEY` ou `OPENAI_API_KEY`. Depois de adicionar, faça *Redeploy*.
+- Supabase: textos iniciais aplicados; administrador configurado.
+
+
 ## 1. Supabase (projeto `rb-assessoria`, ref `kmbyxccoaimgjsmgwazs`, São Paulo)
 
 1. Migrations em `supabase/migrations/` (aplicadas na ordem). O projeto da Júlia **não** é tocado.
